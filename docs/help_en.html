@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warden – Help</title>
+<style>
+  :root {
+    --bg: #f6f8f6; --card: #ffffff; --text: #1f2421; --muted: #5d6661; --line: #dfe5e0;
+    --accent: #1e88e5; --ok: #2e7d32; --down: #c62828; --warn: #b26a00; --code: #eef2ef;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161a18; --card: #1f2421; --text: #e8ece9; --muted: #a3ada7; --line: #333b36;
+            --accent: #64b5f6; --ok: #81c784; --down: #ef9a9a; --warn: #ffcc80; --code: #2a312d; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 16px/1.6 "Segoe UI", system-ui, sans-serif; }
+  header { background: var(--card); border-bottom: 1px solid var(--line); padding: 28px 16px; }
+  header div, main { max-width: 900px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font-size: 30px; }
+  header p { margin: 0; color: var(--muted); }
+  main { padding: 8px 16px 64px; }
+  h2 { margin: 48px 0 12px; font-size: 22px; padding-top: 8px; border-top: 1px solid var(--line); }
+  h3 { margin: 24px 0 8px; font-size: 17px; }
+  nav { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 20px; margin-top: 24px; }
+  nav ol { margin: 0; padding-left: 20px; columns: 2; column-gap: 32px; }
+  nav li { break-inside: avoid; }
+  a { color: var(--accent); }
+  figure { margin: 16px 0; }
+  img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--line); display: block; }
+  figcaption { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; background: var(--card); }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--code); }
+  code, kbd { background: var(--code); border-radius: 4px; padding: 1px 6px; font-family: Consolas, monospace; font-size: 14px; }
+  .note { border-left: 4px solid var(--accent); background: var(--card); padding: 10px 14px; border-radius: 4px; margin: 14px 0; }
+  .warn { border-left-color: var(--warn); }
+  .ok { color: var(--ok); font-weight: 600; }
+  .down { color: var(--down); font-weight: 600; }
+  @media (max-width: 640px) { nav ol { columns: 1; } h1 { font-size: 24px; } }
+</style>
+</head>
+<body>
+<header><div>
+  <h1>Warden – Help</h1>
+  <p>Monitors network devices with ping and alerts you by e-mail or SMS.</p>
+</div></header>
+<main>
+
+<nav><ol>
+  <li><a href="#start">Getting started</a></li>
+  <li><a href="#window">Main window</a></li>
+  <li><a href="#hosts">Adding and editing hosts</a></li>
+  <li><a href="#alerts">When alerts are sent</a></li>
+  <li><a href="#message">Recipients, message and SMS</a></li>
+  <li><a href="#smtp">E-mail sending (SMTP)</a></li>
+  <li><a href="#charts">Charts and logs</a></li>
+  <li><a href="#trace">Traceroute</a></li>
+  <li><a href="#transfer">Moving to another computer</a></li>
+  <li><a href="#general">Start with Windows and language</a></li>
+  <li><a href="#trouble">Troubleshooting</a></li>
+</ol></nav>
+
+<h2 id="start">1. Getting started</h2>
+<p>Run the <code>Warden-setup.exe</code> installer and follow the wizard. At the end you can choose to start Warden
+when you sign in to Windows.</p>
+<div class="note warn">The installer is not digitally signed, so Windows may show "Windows protected your PC".
+Click <b>More info</b> and then <b>Run anyway</b>.</div>
+<p>The window is empty on first start. To get going:</p>
+<ol>
+  <li>Add the devices you want to monitor with <b>Add…</b> (section 3).</li>
+  <li>Click <b>Save</b>.</li>
+  <li>In <b>Settings…</b> enter the alert e-mail and the outgoing mail server (sections 5 and 6), then try <b>Test SMTP</b>.</li>
+</ol>
+
+<h2 id="window">2. Main window</h2>
+<figure><img src="img/en_main.png" alt="Warden main window with host tiles">
+<figcaption>Each tile is one monitored host.</figcaption></figure>
+
+<h3>What the tiles mean</h3>
+<table>
+  <tr><th>Look</th><th>Meaning</th></tr>
+  <tr><td><span class="ok">green dot</span>, e.g. "15 ms (1021x OK)"</td><td>The host responds. The ms value is the response time; "1021x OK" counts successful pings in a row.</td></tr>
+  <tr><td><span class="down">red tile</span>, "down"</td><td>The host failed several times in a row (the number is set in Settings).</td></tr>
+  <tr><td>grey dot, "waiting for reply"</td><td>No reply yet, typically right after start or after adding a host.</td></tr>
+  <tr><td>faded, "not monitored"</td><td>Monitoring is switched off for this host; it is not pinged.</td></tr>
+</table>
+
+<h3>Top bar</h3>
+<ul>
+  <li><b>Ping now</b> pings all hosts immediately, without waiting for the interval.</li>
+  <li><b>Auto every</b> turns automatic pinging on. Pick the interval in the list (10 seconds to 1 hour).</li>
+  <li><b>The bar on the right</b> shows the time left until the next ping. When full, a ping is in progress.</li>
+</ul>
+
+<h3>Status bar</h3>
+<p>On the left: time of the last ping and the number of hosts that are down. On the right: the status of the last
+e-mail. If an e-mail cannot be sent, the reason appears there in red and Warden retries after a minute.</p>
+
+<h2 id="hosts">3. Adding and editing hosts</h2>
+<figure><img src="img/en_host.png" alt="Add host dialog" style="max-width:460px"></figure>
+<ul>
+  <li><b>Add…</b> opens a dialog for a new host. <b>Double-click a tile</b> to edit an existing one.</li>
+  <li><b>Host</b>: IP address (<code>192.168.1.1</code>) or computer name (<code>server.example.com</code>).</li>
+  <li><b>Description</b>: the name shown on the tile and in the log.</li>
+  <li><b>Timeout</b>: how long to wait for a reply. 3000 ms suits most networks; use more for slow radio links.</li>
+  <li><b>Icon</b>: for orientation only, it does not affect monitoring.</li>
+  <li><b>Monitor this host</b>: when unchecked the host stays in the list but is not pinged. Useful during planned maintenance.</li>
+</ul>
+<p>To delete a host, click it and press <b>Delete…</b> (or the <kbd>Delete</kbd> key).</p>
+<div class="note">Changes to the list are saved with the <b>Save</b> button. While there are unsaved changes the window title
+shows an asterisk, and Warden asks whether to save them when you exit.</div>
+
+<h2 id="alerts">4. When alerts are sent</h2>
+<figure><img src="img/en_settings_alerts.png" alt="Alert settings" style="max-width:560px"></figure>
+<p>So that a single lost packet does not flood you with e-mails, Warden waits for <b>several failures in a row</b>:</p>
+<ul>
+  <li><b>Turn icon red after</b> (default 4): when the tile is shown as down.</li>
+  <li><b>Report outage after</b> (default 6): when the outage e-mail is sent. With a 15 s interval that is about 1.5 minutes.</li>
+  <li><b>Report recovery after</b> (default 6): how many successful pings in a row are needed before the "recovered" e-mail.</li>
+</ul>
+<p>A recovery e-mail is only sent for an outage you were previously e-mailed about. Just type the numbers into the fields.</p>
+<h3>Whole network outage</h3>
+<p>When most hosts go down at once (80 % by default), your internet or your own network is probably down. Instead of
+dozens of e-mails you get one: "Network unreachable". When the network is back, only hosts that are still down are reported.</p>
+
+<h2 id="message">5. Recipients, message and SMS</h2>
+<figure><img src="img/en_settings_message.png" alt="Recipients and message text" style="max-width:560px"></figure>
+<ul>
+  <li>Type an address and click <b>Add</b> (or press <kbd>Enter</kbd>). You can have several recipients.</li>
+  <li><b>SMS:</b> add the e-mail address of your carrier's or SMS service's e-mail-to-SMS gateway.</li>
+  <li>You can edit the <b>message text</b>. Tags are replaced with real values:
+    <code>&lt;dt&gt;</code> date, <code>&lt;tm&gt;</code> time, <code>&lt;ip&gt;</code> host address.</li>
+</ul>
+
+<h2 id="smtp">6. E-mail sending (SMTP)</h2>
+<figure><img src="img/en_settings_smtp.png" alt="SMTP server settings" style="max-width:560px"></figure>
+<ol>
+  <li>Choose your e-mail service under <b>Provider</b> (Seznam, Gmail, Outlook). Server, port and encryption are filled in.</li>
+  <li>Enter your e-mail address in <b>Sender (From)</b>.</li>
+  <li>You can leave <b>Username</b> empty; the sender address is used.</li>
+  <li>Enter the <b>Password</b> and click <b>Test SMTP</b>. A test e-mail goes to the first recipient in the list.</li>
+</ol>
+<div class="note"><b>Gmail</b> (and <b>Seznam</b> with two-factor sign-in) will not accept your normal password.
+Create an <b>app password</b> in your account settings and use that.</div>
+<h3>Encryption</h3>
+<p><b>SSL/TLS</b> and <b>STARTTLS</b> send the password and messages encrypted. With <b>None</b> the password travels over the
+network as plain text, which is acceptable only for a mail server on your own network. If the server supports
+STARTTLS, Test SMTP tells you and recommends enabling it.</p>
+<p>Warden stores the password encrypted for your Windows account. Other users or computers cannot read it.</p>
+
+<h2 id="charts">7. Charts and logs</h2>
+<figure><img src="img/en_charts.png" alt="Charts and logs window"></figure>
+<ul>
+  <li>Select a host on the left and a time range at the top.</li>
+  <li>The <b>chart</b> shows response time in ms. Outages are red dots on the bottom axis and the line is broken there.</li>
+  <li>The summary at the top shows the number of pings, success rate and the minimum, average and maximum response.</li>
+  <li>The <b>event log</b> lists all outages and recoveries, including previous runs. Check <b>Selected host only</b> to filter.</li>
+</ul>
+<div class="note">The chart shows data since Warden started. The log is stored in <code>%APPDATA%\Warden\events.csv</code>,
+which you can also open in Excel.</div>
+
+<h2 id="trace">8. Traceroute</h2>
+<figure><img src="img/en_trace.png" alt="Traceroute window" style="max-width:560px"></figure>
+<p>Click a host and press <b>Traceroute…</b>. Warden shows the path packets take to the host. This helps find where the
+connection breaks: the last responding address is where the path stops.</p>
+
+<h2 id="transfer">9. Moving to another computer</h2>
+<figure><img src="img/en_settings_general.png" alt="General tab with configuration export" style="max-width:560px"></figure>
+<ol>
+  <li>On the old computer: <b>Settings… → General → Export configuration…</b> and save the file (e.g. to a USB stick).</li>
+  <li>On the new computer install Warden and use <b>Import configuration…</b>.</li>
+  <li>Enter the SMTP password again in <b>Settings → SMTP server</b>. For security reasons it is not stored in the file.</li>
+</ol>
+
+<h2 id="general">10. Start with Windows and language</h2>
+<ul>
+  <li><b>Start Warden when I sign in to Windows</b>: Warden starts by itself, so monitoring survives a computer restart.</li>
+  <li><b>Language</b>: Czech or English, following Windows by default. The change takes effect after restarting Warden.</li>
+  <li>Only one copy of Warden can run. If you start it again, it tells you it is already running.</li>
+</ul>
+
+<h2 id="trouble">11. Troubleshooting</h2>
+<table>
+  <tr><th>Problem</th><th>What to do</th></tr>
+  <tr><td>No e-mails arrive</td><td>Check the reason at the bottom right of the window. Use <b>Test SMTP</b> in Settings; it explains the error.</td></tr>
+  <tr><td>"The server rejected the username or password"</td><td>Check the password. Gmail and Seznam with two-factor sign-in need an app password.</td></tr>
+  <tr><td>A "no valid MX record" or non-delivery e-mail arrived</td><td>Sending works, but the recipient address does not exist. Fix it in the recipient list.</td></tr>
+  <tr><td>All hosts turn red at once</td><td>Your network or internet connection is probably down. You get a single "Network unreachable" e-mail.</td></tr>
+  <tr><td>A host stays at "waiting for reply"</td><td>The host does not answer ping. Check the address and whether the device or its firewall allows ping.</td></tr>
+  <tr><td>Where is my data?</td><td>In the <code>%APPDATA%\Warden</code> folder (type it into the File Explorer address bar): host list, settings and log.</td></tr>
+</table>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warden – nápověda</title>
+<style>
+  :root {
+    --bg: #f6f8f6; --card: #ffffff; --text: #1f2421; --muted: #5d6661; --line: #dfe5e0;
+    --accent: #1e88e5; --ok: #2e7d32; --down: #c62828; --warn: #b26a00; --code: #eef2ef;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161a18; --card: #1f2421; --text: #e8ece9; --muted: #a3ada7; --line: #333b36;
+            --accent: #64b5f6; --ok: #81c784; --down: #ef9a9a; --warn: #ffcc80; --code: #2a312d; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 16px/1.6 "Segoe UI", system-ui, sans-serif; }
+  header { background: var(--card); border-bottom: 1px solid var(--line); padding: 28px 16px; }
+  header div, main { max-width: 900px; margin: 0 auto; }
+  h1 { margin: 0 0 4px; font-size: 30px; }
+  header p { margin: 0; color: var(--muted); }
+  main { padding: 8px 16px 64px; }
+  h2 { margin: 48px 0 12px; font-size: 22px; padding-top: 8px; border-top: 1px solid var(--line); }
+  h3 { margin: 24px 0 8px; font-size: 17px; }
+  nav { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 20px; margin-top: 24px; }
+  nav ol { margin: 0; padding-left: 20px; columns: 2; column-gap: 32px; }
+  nav li { break-inside: avoid; }
+  a { color: var(--accent); }
+  figure { margin: 16px 0; }
+  img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--line); display: block; }
+  figcaption { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; background: var(--card); }
+  th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: var(--code); }
+  code, kbd { background: var(--code); border-radius: 4px; padding: 1px 6px; font-family: Consolas, monospace; font-size: 14px; }
+  .note { border-left: 4px solid var(--accent); background: var(--card); padding: 10px 14px; border-radius: 4px; margin: 14px 0; }
+  .warn { border-left-color: var(--warn); }
+  .ok { color: var(--ok); font-weight: 600; }
+  .down { color: var(--down); font-weight: 600; }
+  @media (max-width: 640px) { nav ol { columns: 1; } h1 { font-size: 24px; } }
+</style>
+</head>
+<body>
+<header><div>
+  <h1>Warden – nápověda</h1>
+  <p>Hlídání dostupnosti síťových prvků pingem, s upozorněním e-mailem nebo SMS.</p>
+</div></header>
+<main>
+
+<nav><ol>
+  <li><a href="#start">První spuštění</a></li>
+  <li><a href="#okno">Hlavní okno</a></li>
+  <li><a href="#prvky">Přidání a úprava prvků</a></li>
+  <li><a href="#upozorneni">Kdy přijde upozornění</a></li>
+  <li><a href="#zprava">Příjemci, zpráva a SMS</a></li>
+  <li><a href="#smtp">Nastavení odesílání (SMTP)</a></li>
+  <li><a href="#grafy">Grafy a logy</a></li>
+  <li><a href="#trasovani">Trasování</a></li>
+  <li><a href="#prenos">Přenos na jiný počítač</a></li>
+  <li><a href="#obecne">Spouštění s Windows a jazyk</a></li>
+  <li><a href="#problemy">Řešení problémů</a></li>
+</ol></nav>
+
+<h2 id="start">1. První spuštění</h2>
+<p>Spusť instalátor <code>Warden-setup.exe</code> a projdi průvodce. Na konci můžeš zaškrtnout, aby se Warden spouštěl
+po přihlášení do Windows.</p>
+<div class="note warn">Instalátor není digitálně podepsaný, takže Windows může zobrazit „Systém Windows ochránil váš počítač“.
+Klikni na <b>Další informace</b> a pak <b>Přesto spustit</b>.</div>
+<p>Po prvním spuštění je okno prázdné. Postup:</p>
+<ol>
+  <li>Tlačítkem <b>Přidat…</b> přidej prvky, které chceš hlídat (kapitola 3).</li>
+  <li>Klikni na <b>Uložit</b>.</li>
+  <li>V <b>Nastavení…</b> vyplň e-mail pro upozornění a odesílací server (kapitoly 5 a 6) a vyzkoušej <b>Test SMTP</b>.</li>
+</ol>
+
+<h2 id="okno">2. Hlavní okno</h2>
+<figure><img src="img/cs_main.png" alt="Hlavní okno Wardenu s dlaždicemi prvků">
+<figcaption>Každá dlaždice je jeden sledovaný prvek.</figcaption></figure>
+
+<h3>Co znamenají dlaždice</h3>
+<table>
+  <tr><th>Vzhled</th><th>Význam</th></tr>
+  <tr><td><span class="ok">zelená tečka</span>, např. „15 ms (1021x OK)“</td><td>Prvek odpovídá. Číslo v ms je odezva, „1021x OK“ je počet úspěšných pingů v řadě.</td></tr>
+  <tr><td><span class="down">červená dlaždice</span>, „nedostupný“</td><td>Prvek neodpověděl několikrát za sebou (počet nastavíš v Nastavení).</td></tr>
+  <tr><td>šedá tečka, „čekám na odpověď“</td><td>Prvek zatím neodpověděl, typicky hned po spuštění nebo po přidání.</td></tr>
+  <tr><td>vybledlá, „nesledováno“</td><td>Prvek má vypnuté sledování a nepinguje se.</td></tr>
+</table>
+
+<h3>Horní lišta</h3>
+<ul>
+  <li><b>Ping 1x</b> pingne všechny prvky hned, bez čekání na interval.</li>
+  <li><b>Auto po</b> zapíná automatické pingání. V rozbalovacím seznamu vybereš interval (10 vteřin až 1 hodina).</li>
+  <li><b>Pruh vpravo</b> ukazuje, kolik zbývá do dalšího pingu. Když je plný, právě se pinguje.</li>
+</ul>
+
+<h3>Stavový řádek</h3>
+<p>Vlevo je čas posledního pingu a počet nedostupných prvků. Vpravo stav posledního e-mailu.
+Když se mail nepodaří odeslat, zobrazí se tam červeně důvod a Warden to zkusí znovu za minutu.</p>
+
+<h2 id="prvky">3. Přidání a úprava prvků</h2>
+<figure><img src="img/cs_host.png" alt="Dialog pro přidání prvku" style="max-width:460px"></figure>
+<ul>
+  <li><b>Přidat…</b> otevře dialog nového prvku. <b>Dvojklik na dlaždici</b> otevře úpravu existujícího.</li>
+  <li><b>Host</b>: IP adresa (<code>192.168.1.1</code>) nebo jméno počítače (<code>server.firma.cz</code>).</li>
+  <li><b>Popis</b>: název, který se ukáže na dlaždici a v logu, např. „Hospoda“.</li>
+  <li><b>Timeout</b>: jak dlouho čekat na odpověď. 3000 ms vyhovuje většině sítí, u pomalých radiových spojů dej víc.</li>
+  <li><b>Ikona</b>: jen pro přehlednost, na funkci nemá vliv.</li>
+  <li><b>Sledovat tento prvek</b>: když ho odškrtneš, prvek zůstane v seznamu, ale nepinguje se. Hodí se při plánované odstávce.</li>
+</ul>
+<p>Prvek smažeš tak, že na něj klikneš a dáš <b>Smazat…</b> (nebo klávesu <kbd>Delete</kbd>).</p>
+<div class="note">Změny v seznamu se ukládají až tlačítkem <b>Uložit</b>. Dokud nejsou uložené, je v titulku okna hvězdička
+a při zavírání se Warden zeptá, jestli změny uložit.</div>
+
+<h2 id="upozorneni">4. Kdy přijde upozornění</h2>
+<figure><img src="img/cs_settings_alerts.png" alt="Nastavení upozornění" style="max-width:560px"></figure>
+<p>Aby tě nezahltily maily kvůli jednomu ztracenému paketu, Warden čeká na <b>několik selhání za sebou</b>:</p>
+<ul>
+  <li><b>Ikonu zčervenat po</b> (výchozí 4): od kdy se dlaždice zobrazí jako nedostupná.</li>
+  <li><b>Výpadek hlásit po</b> (výchozí 6): kdy odejde mail o výpadku. Při 15s intervalu to je asi za 1,5 minuty.</li>
+  <li><b>Obnovu hlásit po</b> (výchozí 6): kolik úspěšných pingů za sebou je potřeba, než přijde mail „obnoveno“.</li>
+</ul>
+<p>Mail o obnovení přijde jen za výpadek, o kterém ti předtím přišel mail. Čísla do polí jednoduše napiš.</p>
+<h3>Výpadek celé sítě</h3>
+<p>Když najednou vypadne většina prvků (výchozí 80 %), pravděpodobně spadl internet nebo tvoje vlastní síť.
+Místo desítek mailů přijde jeden: „Síť nedostupná“. Po obnovení sítě se nahlásí jen prvky, které zůstaly nedostupné.</p>
+
+<h2 id="zprava">5. Příjemci, zpráva a SMS</h2>
+<figure><img src="img/cs_settings_message.png" alt="Příjemci a text zprávy" style="max-width:560px"></figure>
+<ul>
+  <li>Adresu napiš do pole a klikni na <b>Přidat</b> (nebo <kbd>Enter</kbd>). Příjemců může být víc.</li>
+  <li><b>SMS:</b> přidej e-mailovou adresu SMS brány svého operátora nebo SMS služby. Mail se pak doručí jako SMS.</li>
+  <li><b>Text zprávy</b> můžeš upravit. Značky se nahradí skutečnými hodnotami:
+    <code>&lt;dt&gt;</code> datum, <code>&lt;tm&gt;</code> čas, <code>&lt;ip&gt;</code> adresa prvku.
+    Výchozí <code>IP: &lt;ip&gt; ; &lt;tm&gt; IPWarden</code> odpovídá původnímu programu IPWatch.</li>
+</ul>
+
+<h2 id="smtp">6. Nastavení odesílání (SMTP)</h2>
+<figure><img src="img/cs_settings_smtp.png" alt="Nastavení SMTP serveru" style="max-width:560px"></figure>
+<ol>
+  <li>V poli <b>Poskytovatel</b> vyber svou e-mailovou službu (Seznam, Gmail, Outlook). Server, port a šifrování se vyplní samy.</li>
+  <li>Do <b>Odesílatel (Od)</b> napiš svou e-mailovou adresu.</li>
+  <li><b>Uživ. jméno</b> můžeš nechat prázdné, použije se adresa odesílatele.</li>
+  <li>Vyplň <b>Heslo</b> a klikni na <b>Test SMTP</b>. Zkušební mail odejde na prvního příjemce ze seznamu.</li>
+</ol>
+<div class="note"><b>Gmail</b> (a <b>Seznam</b> se zapnutým dvoufázovým ověřením) nepřijme běžné heslo.
+V nastavení účtu si vytvoř <b>heslo pro aplikace</b> a zadej to.</div>
+<h3>Šifrování</h3>
+<p>Volby <b>SSL/TLS</b> a <b>STARTTLS</b> posílají heslo i zprávy šifrovaně. Při volbě <b>Bez šifrování</b> jde heslo po síti
+jako čitelný text. To je v pořádku jen pro poštovní server ve vlastní síti. Když server umí STARTTLS, Test SMTP ti to
+napíše a doporučí ho zapnout.</p>
+<p>Heslo se ve Wardenu ukládá zašifrované pro tvůj účet Windows. Jiný uživatel ani jiný počítač ho nepřečte.</p>
+
+<h2 id="grafy">7. Grafy a logy</h2>
+<figure><img src="img/cs_charts.png" alt="Okno Grafy a logy"></figure>
+<ul>
+  <li>Vlevo vyber prvek, nahoře období.</li>
+  <li><b>Graf</b> ukazuje odezvu v ms. Výpadky jsou červené body na spodní ose, čára je v tu dobu přerušená.</li>
+  <li>Nahoře je souhrn: počet pingů, úspěšnost a nejnižší, průměrná a nejvyšší odezva.</li>
+  <li><b>Log událostí</b> obsahuje všechny výpadky a obnovení, i z minulých spuštění.
+    Zaškrtni <b>Jen vybraný prvek</b> pro filtrování.</li>
+</ul>
+<div class="note">Graf ukazuje data od spuštění Wardenu. Log je uložený v souboru <code>%APPDATA%\Warden\events.csv</code>,
+který otevřeš i v Excelu.</div>
+
+<h2 id="trasovani">8. Trasování</h2>
+<figure><img src="img/cs_trace.png" alt="Okno trasování" style="max-width:560px"></figure>
+<p>Klikni na prvek a dej <b>Trasování…</b>. Warden zobrazí cestu paketů až k prvku. Pomůže najít, kde přesně
+spojení přestává fungovat: poslední odpovídající adresa je místo, kde se cesta přerušila.</p>
+
+<h2 id="prenos">9. Přenos na jiný počítač</h2>
+<figure><img src="img/cs_settings_general.png" alt="Záložka Obecné s exportem konfigurace" style="max-width:560px"></figure>
+<ol>
+  <li>Na původním počítači: <b>Nastavení… → Obecné → Exportovat konfiguraci…</b> a ulož soubor (např. na flash disk).</li>
+  <li>Na novém počítači nainstaluj Warden a dej <b>Importovat konfiguraci…</b>.</li>
+  <li>Znovu zadej heslo SMTP v <b>Nastavení → SMTP server</b>. Z bezpečnostních důvodů se do souboru neukládá.</li>
+</ol>
+
+<h2 id="obecne">10. Spouštění s Windows a jazyk</h2>
+<ul>
+  <li><b>Spouštět Warden po přihlášení do Windows</b>: Warden se spustí sám, takže hlídání nevypadne po restartu počítače.</li>
+  <li><b>Jazyk</b>: čeština nebo angličtina, výchozí podle Windows. Změna se projeví po restartu Wardenu.</li>
+  <li>Warden může běžet jen jednou. Když ho spustíš podruhé, upozorní tě, že už běží.</li>
+</ul>
+
+<h2 id="problemy">11. Řešení problémů</h2>
+<table>
+  <tr><th>Problém</th><th>Co udělat</th></tr>
+  <tr><td>Nechodí maily</td><td>Podívej se do stavového řádku vpravo dole na důvod. V Nastavení použij <b>Test SMTP</b>, který chybu vysvětlí česky.</td></tr>
+  <tr><td>„Server odmítl jméno nebo heslo“</td><td>Zkontroluj heslo. U Gmailu a u Seznamu s dvoufázovým ověřením použij heslo pro aplikace.</td></tr>
+  <tr><td>Přišel mail „…no valid MX record“ nebo o nedoručení</td><td>Odesílání funguje, ale adresa příjemce neexistuje. Oprav ji v seznamu příjemců.</td></tr>
+  <tr><td>Všechny prvky jsou najednou červené</td><td>Pravděpodobně nefunguje síť nebo internet u tebe. Přijde jeden mail „Síť nedostupná“.</td></tr>
+  <tr><td>Prvek je pořád „čekám na odpověď“</td><td>Prvek na ping neodpovídá. Zkontroluj adresu a to, jestli zařízení nebo jeho firewall ping nepovoluje.</td></tr>
+  <tr><td>Kde jsou data?</td><td>Ve složce <code>%APPDATA%\Warden</code> (napiš do adresního řádku Průzkumníka). Najdeš tam seznam prvků, nastavení a log.</td></tr>
+</table>
+
+</main>
+</body>
+</html>
