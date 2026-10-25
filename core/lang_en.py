@@ -231,6 +231,8 @@ EN = {
     "Heslo SMTP se neexportuje. Zadej ho v Nastavení → SMTP server.":
         "The SMTP password is not exported. Enter it in Settings → SMTP server.",
 
+    "V souboru {file} bylo {count} neplatných prvků, přeskočily se.":
+        "{count} invalid hosts in {file} were skipped.",
     "Soubor {file} byl poškozený a nešel načíst. Původní obsah je uložený v {backup}.":
         "The file {file} was damaged and could not be loaded. Its original content is saved in {backup}.",
     "Uložené heslo SMTP nejde dešifrovat (jiný uživatel nebo počítač). Zadej ho prosím znovu v Nastavení.":

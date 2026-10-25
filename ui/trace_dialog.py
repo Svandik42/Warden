@@ -12,6 +12,7 @@ from PySide6.QtWidgets import (
 
 from core.i18n import tr
 from core.models import Host
+from core.validation import is_valid_address
 
 
 
@@ -51,6 +52,9 @@ class TraceDialog(QDialog):
         if self.process.state() != QProcess.ProcessState.NotRunning:
             return
         self.output.clear()
+        if not is_valid_address(self.host.address):
+            self.status_label.setText(tr("Adresa obsahuje nepovolené znaky."))
+            return
         self.again_button.setEnabled(False)
         self.status_label.setText(tr("Trasuji cestu k {address}…", address=self.host.address))
         self.process.start("tracert", ["-d", "-w", "1000", "-h", "30", self.host.address])

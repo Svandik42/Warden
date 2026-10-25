@@ -1,6 +1,4 @@
-﻿import re
-
-from PySide6.QtCore import QSize, Qt
+﻿from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import (
     QCheckBox,
@@ -17,12 +15,10 @@ from PySide6.QtWidgets import (
 
 from core.i18n import tr
 from core.models import Host
+from core.validation import is_valid_address
 
 from .icons import ICON_NAMES, icon_key, tile_pixmap
 from .widgets import NumberField, with_unit
-
-ADDRESS_PATTERN = re.compile(r"[A-Za-z0-9_\[][A-Za-z0-9_.:%\[\]-]*")
-
 
 def address_problem(address: str) -> str:
     if not address:
@@ -33,7 +29,7 @@ def address_problem(address: str) -> str:
         return tr("Adresa nesmí obsahovat mezery.")
     if address.startswith("-"):
         return tr("Adresa nesmí začínat pomlčkou.")
-    if not ADDRESS_PATTERN.fullmatch(address):
+    if not is_valid_address(address):
         return tr("Adresa obsahuje nepovolené znaky.")
     return ""
 

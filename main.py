@@ -1,4 +1,5 @@
 import ctypes
+import html
 import sys
 import time
 from dataclasses import fields
@@ -73,6 +74,11 @@ def save_or_warn(parent: QWidget, action, what: str) -> bool:
         QMessageBox.warning(parent, tr("Uložení se nezdařilo"),
                             tr("{what} se nepodařilo uložit:\n{error}", what=what, error=e))
         return False
+
+
+def as_text(template: str, **values) -> str:
+    safe = {key: html.escape(str(value)) for key, value in values.items()}
+    return "<p>" + tr(template, **safe).replace("\n", "<br>") + "</p>"
 
 
 def set_windows_app_id() -> None:
@@ -197,7 +203,7 @@ def main() -> None:
             return
         host = model.host_at(row)
         answer = QMessageBox.question(window, tr("Smazat prvek"),
-                                      tr("Opravdu smazat „{name}“?", name=host.description or host.address))
+                                      as_text("Opravdu smazat „{name}“?", name=host.description or host.address))
         if answer == QMessageBox.StandardButton.Yes:
             model.remove_host(row)
             window.setWindowModified(True)
@@ -243,7 +249,7 @@ def main() -> None:
             new_hosts, new_settings = import_config(Path(path))
         except (OSError, ValueError, TypeError):
             QMessageBox.warning(window, tr("Import se nezdařil"),
-                                tr("Soubor {path} není platná konfigurace Wardenu.", path=path))
+                                as_text("Soubor {path} není platná konfigurace Wardenu.", path=path))
             return
         answer = QMessageBox.question(
             window, tr("Importovat konfiguraci"),

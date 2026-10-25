@@ -17,7 +17,15 @@ Write-Host "Program je ve složce dist\Warden (spouští se Warden.exe)."
 $version = (Select-String -Path installer\warden.iss -Pattern '#define AppVersion "(.+)"').Matches[0].Groups[1].Value
 New-Item -ItemType Directory -Force installer\Output | Out-Null
 $zip = "installer\Output\Warden-$version-portable.zip"
-Compress-Archive -Path dist\Warden -DestinationPath $zip -Force
+foreach ($attempt in 1..3) {
+    try {
+        Compress-Archive -Path dist\Warden -DestinationPath $zip -Force -ErrorAction Stop
+        break
+    } catch {
+        if ($attempt -eq 3) { throw }
+        Start-Sleep -Seconds 5
+    }
+}
 Write-Host "Přenosná verze: $zip"
 
 $iscc = @(

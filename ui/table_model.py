@@ -1,4 +1,6 @@
-﻿from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
+﻿import html
+
+from PySide6.QtCore import QAbstractListModel, QModelIndex, Qt
 
 from core.models import Host, HostState, Status
 
@@ -22,7 +24,8 @@ class HostListModel(QAbstractListModel):
         if role == Qt.ItemDataRole.DisplayRole:
             return host.description
         if role == Qt.ItemDataRole.ToolTipRole:
-            return f"{host.description}\n{host.address}" if host.description else host.address
+            lines = [host.description, host.address] if host.description else [host.address]
+            return "<p style='white-space:pre'>" + "<br>".join(html.escape(line) for line in lines) + "</p>"
         if role == HostRole.STATUS:
             return state.status if state else Status.UNKNOWN
         if role == HostRole.RTT_MS:

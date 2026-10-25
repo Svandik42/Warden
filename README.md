@@ -29,8 +29,8 @@ současných poštovních služeb, šifrováním a češtinou i angličtinou.
 
    | soubor | pro koho |
    |---|---|
-   | `Warden-1.0.0-setup.exe` | **doporučeno**: klasická instalace se zástupcem v nabídce Start |
-   | `Warden-1.0.0-portable.zip` | bez instalace: rozbal kamkoli (třeba na flash disk) a spusť `Warden.exe` |
+   | `Warden-…-setup.exe` | **doporučeno**: klasická instalace se zástupcem v nabídce Start |
+   | `Warden-…-portable.zip` | bez instalace: rozbal kamkoli (třeba na flash disk) a spusť `Warden.exe` |
 
 2. Spusť instalátor a projdi průvodce. Instalace nepotřebuje práva správce. Na konci si můžeš zaškrtnout spouštění s Windows.
 

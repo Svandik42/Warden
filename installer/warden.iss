@@ -1,5 +1,5 @@
 ﻿#define AppName "Warden"
-#define AppVersion "1.0.0"
+#define AppVersion "1.0.1"
 #define AppExe "Warden.exe"
 
 [Setup]

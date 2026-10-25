@@ -9,6 +9,7 @@ from .config import Settings
 from .models import Event, Host, HostState
 from .monitor import Monitor
 from .pinger import ping
+from .validation import MIN_PING_INTERVAL
 
 CycleCallback = Callable[[dict[int, HostState], list[Event]], None]
 
@@ -38,6 +39,12 @@ class Scheduler:
     def ping_now(self) -> None:
         self._wake.set()
 
+    def _interval(self) -> float:
+        try:
+            return max(MIN_PING_INTERVAL, float(self.settings.ping_interval))
+        except (TypeError, ValueError):
+            return Settings().ping_interval
+
     def _loop(self) -> None:
         while not self._stopping:
             started = time.monotonic()
@@ -46,8 +53,8 @@ class Scheduler:
             except Exception:
                 traceback.print_exc()
             elapsed = time.monotonic() - started
-            remaining = max(0, self.settings.ping_interval - elapsed)
-            if self.settings.auto_ping:
+            remaining = max(0, self._interval() - elapsed)
+            if self.settings.auto_ping is not False:
                 self.next_cycle_at = time.monotonic() + remaining
                 self._wake.wait(timeout=remaining)
             else:

@@ -31,8 +31,8 @@ today's mail services, encryption, and both Czech and English.
 
    | file | for whom |
    |---|---|
-   | `Warden-1.0.0-setup.exe` | **recommended**: regular installation with a Start menu shortcut |
-   | `Warden-1.0.0-portable.zip` | no installation: unzip anywhere (even a USB stick) and run `Warden.exe` |
+   | `Warden-…-setup.exe` | **recommended**: regular installation with a Start menu shortcut |
+   | `Warden-…-portable.zip` | no installation: unzip anywhere (even a USB stick) and run `Warden.exe` |
 
 2. Run the installer and follow the wizard. It does not need administrator rights. At the end you can choose to start
    Warden with Windows.
